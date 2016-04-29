@@ -550,6 +550,13 @@ namespace Ostara {
 			this.Text = "Ostara - Stopped";
 		}
 
+		void flvPackets_CellRightClick(object sender, BrightIdeasSoftware.CellRightClickEventArgs e) {
+			if (e.RowIndex == -1)
+				return;
+
+			EditStructure();
+		}
+
 		void flvPackets_FormatRow(object sender, BrightIdeasSoftware.FormatRowEventArgs e) {
 			var p = (PacketInfo)e.Model;
 			Colours.I.FormatRow(e.Item, p.Source, p.Destination);
@@ -683,6 +690,7 @@ namespace Ostara {
 			if (!Ignores.I.Values.Contains(p.Opcode))
 				flvPackets.AddObject(p);
 		}
+
 		delegate void AddPacketDel(PacketInfo p);
 
 		void ClearInspector() {
@@ -751,28 +759,6 @@ namespace Ostara {
 			var pi = new ProcessStartInfo(path + filename);
 			p.StartInfo = pi;
 			p.Start();
-
-			/*if (tlvStructure.GetItemCount() == 0)
-				return;
-
-			var dlg = new FormStructure();
-			dlg.Width = Settings.I.FormStructureWidth;
-			dlg.Height = Settings.I.FormStructureHeight;
-			int x, y;
-			dlg.SetDesktopLocation(((x = Cursor.Position.X - dlg.Width) < 0) ? 0 : x,
-								   ((y = Cursor.Position.Y - dlg.Height) < 0) ? 0 : y);
-
-			if (dlg.ShowDialog() == DialogResult.Cancel) {
-				dlg.Dispose();
-				return;
-			}
-
-			var pi = (PacketInfo)flvPackets.SelectedObject;
-			Structure.Save(dlg.txtStructure.Lines, pi);
-			tlvStructure.SetObjects(Structure.Parse(pi));
-			tlvStructure.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
-
-			dlg.Dispose();*/
 		}
 	}
 }

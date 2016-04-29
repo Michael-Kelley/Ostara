@@ -394,6 +394,7 @@
 			this.cpA2CFG.Name = "cpA2CFG";
 			this.cpA2CFG.Size = new System.Drawing.Size(121, 21);
 			this.cpA2CFG.TabIndex = 14;
+			this.cpA2CFG.SelectedColorChanged += new System.EventHandler(this.cp_SelectedColorChanged);
 			// 
 			// cpC2ABG
 			// 
@@ -407,6 +408,7 @@
 			this.cpC2ABG.Name = "cpC2ABG";
 			this.cpC2ABG.Size = new System.Drawing.Size(121, 21);
 			this.cpC2ABG.TabIndex = 7;
+			this.cpC2ABG.SelectedColorChanged += new System.EventHandler(this.cp_SelectedColorChanged);
 			// 
 			// label8
 			// 

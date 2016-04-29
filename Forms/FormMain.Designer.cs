@@ -490,6 +490,7 @@
 			this.flvPackets.UseExplorerTheme = true;
 			this.flvPackets.View = System.Windows.Forms.View.Details;
 			this.flvPackets.VirtualMode = true;
+			this.flvPackets.CellRightClick += new System.EventHandler<BrightIdeasSoftware.CellRightClickEventArgs>(this.flvPackets_CellRightClick);
 			this.flvPackets.FormatRow += new System.EventHandler<BrightIdeasSoftware.FormatRowEventArgs>(this.flvPackets_FormatRow);
 			this.flvPackets.ItemsChanged += new System.EventHandler<BrightIdeasSoftware.ItemsChangedEventArgs>(this.flvPackets_ItemsChanged);
 			this.flvPackets.SelectedIndexChanged += new System.EventHandler(this.flvPackets_SelectedIndexChanged);
@@ -617,12 +618,12 @@
 			this.cmsStructure.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cmseStructureEdit});
 			this.cmsStructure.Name = "cmsStructure";
-			this.cmsStructure.Size = new System.Drawing.Size(146, 26);
+			this.cmsStructure.Size = new System.Drawing.Size(145, 26);
 			// 
 			// cmseStructureEdit
 			// 
 			this.cmseStructureEdit.Name = "cmseStructureEdit";
-			this.cmseStructureEdit.Size = new System.Drawing.Size(145, 22);
+			this.cmseStructureEdit.Size = new System.Drawing.Size(144, 22);
 			this.cmseStructureEdit.Text = "Edit Structure";
 			this.cmseStructureEdit.Click += new System.EventHandler(this.cmseStructureEdit_Click);
 			// 
@@ -735,26 +736,26 @@
 			// tsmiIgnoreAdd
 			// 
 			this.tsmiIgnoreAdd.Name = "tsmiIgnoreAdd";
-			this.tsmiIgnoreAdd.Size = new System.Drawing.Size(206, 22);
+			this.tsmiIgnoreAdd.Size = new System.Drawing.Size(203, 22);
 			this.tsmiIgnoreAdd.Text = "Add To Ignore List";
 			this.tsmiIgnoreAdd.Click += new System.EventHandler(this.tsmiIgnoreAdd_Click);
 			// 
 			// tsmiIgnoreRemove
 			// 
 			this.tsmiIgnoreRemove.Name = "tsmiIgnoreRemove";
-			this.tsmiIgnoreRemove.Size = new System.Drawing.Size(206, 22);
+			this.tsmiIgnoreRemove.Size = new System.Drawing.Size(203, 22);
 			this.tsmiIgnoreRemove.Text = "Remove From Ignore List";
 			this.tsmiIgnoreRemove.Click += new System.EventHandler(this.tsmiIgnoreRemove_Click);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(203, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(200, 6);
 			// 
 			// tsmiIgnoreManage
 			// 
 			this.tsmiIgnoreManage.Name = "tsmiIgnoreManage";
-			this.tsmiIgnoreManage.Size = new System.Drawing.Size(206, 22);
+			this.tsmiIgnoreManage.Size = new System.Drawing.Size(203, 22);
 			this.tsmiIgnoreManage.Text = "Manage Ignore List";
 			this.tsmiIgnoreManage.Click += new System.EventHandler(this.tsmiIgnoreManage_Click);
 			// 
@@ -828,7 +829,7 @@
 			this.toolStripLabel1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripLabel1.Image")));
 			this.toolStripLabel1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.toolStripLabel1.Name = "toolStripLabel1";
-			this.toolStripLabel1.Size = new System.Drawing.Size(117, 24);
+			this.toolStripLabel1.Size = new System.Drawing.Size(115, 24);
 			this.toolStripLabel1.Text = "Network Interface";
 			// 
 			// FormMain
