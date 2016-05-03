@@ -66,10 +66,10 @@ namespace Ostara {
 
 			tscbNet.SelectedIndex = 0;
 
-			tlvStructure.CanExpandGetter = (e) => { return ((Result)e).Value is ListDictionary; };
-			tlvStructure.ChildrenGetter = (e) => { return ((ListDictionary)(((Result)e).Value)).Values; };
+			tlvStructure.CanExpandGetter = (e) => { return ((Result)e).Value is OrderedDictionary; };
+			tlvStructure.ChildrenGetter = (e) => { return ((OrderedDictionary)(((Result)e).Value)).Values; };
 			olvValue.AspectToStringConverter = (x) => {
-				if (x is ListDictionary)
+				if (x is OrderedDictionary)
 					return string.Empty;
 				else
 					return $"{x}";
