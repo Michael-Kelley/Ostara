@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Drawing;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,9 +15,6 @@ using PcapDotNet.Core;
 using PcapDotNet.Packets;
 using PcapDotNet.Packets.IpV4;
 using PcapDotNet.Packets.Transport;
-using System.IO;
-using System.Collections.Specialized;
-using System.Diagnostics;
 
 namespace Ostara {
 	partial class FormMain : Form {
@@ -60,16 +60,28 @@ namespace Ostara {
 			hexView.BytesPerLine = (Settings.I.BytesPerLine + 1) * 8;
 			tableLayoutPanel1.ColumnStyles[1].Width = hexView.RequiredWidth + 17;
 			cbBytesPerLine.SelectedIndex = Settings.I.BytesPerLine;
+			var ae = (Ostara.Controls.ToolStripRadioButtonMenuItem)autoExpandToolStripMenuItem.DropDownItems[(int)Settings.I.AutoExpand];
+			ae.CheckState = CheckState.Checked;
 
 			foreach (var d in LivePacketDevice.AllLocalMachine)
 				tscbNet.Items.Add(GetFriendlyDeviceName(d));
 
 			tscbNet.SelectedIndex = 0;
 
-			tlvStructure.CanExpandGetter = (e) => { return ((Result)e).Value is OrderedDictionary; };
-			tlvStructure.ChildrenGetter = (e) => { return ((OrderedDictionary)(((Result)e).Value)).Values; };
-			olvValue.AspectToStringConverter = (x) => {
-				if (x is OrderedDictionary)
+			tlvStructure.CanExpandGetter = e => ((Result)e).HasChildren;
+			tlvStructure.ChildrenGetter = e => ((Result)e).Children;
+			tlvStructure.Expanded += (s, e) => {
+				if (Settings.I.AutoExpand != Settings.AutoExpandType.Bitfields)
+					return;
+
+				var r = (Result)e.Model;
+
+				foreach (var v in r)
+					if (v.Type == NodeType.Bitfield)
+						tlvStructure.Expand(v);
+			};
+			olvValue.AspectToStringConverter = x => {
+				if (x is ResultCollection)
 					return string.Empty;
 				else
 					return $"{x}";
@@ -590,21 +602,30 @@ namespace Ostara {
 				var pi = (PacketInfo)flvPackets.SelectedObject;
 				var bytes = new DynamicByteProvider(pi.Data);
 				hexView.ByteProvider = bytes;
-				tlvStructure.SetObjects(ParsePacketData(pi));
+				SetStructureObjects(ParsePacketData(pi));
 				tlvStructure.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
 			}
 		}
 
-		ICollection ParsePacketData(PacketInfo packet) {
+		ResultCollection ParsePacketData(PacketInfo packet) {
 			var filename = $"cfg\\structs\\{GetSchemaFilename(packet)}";
 
 			if (!File.Exists(filename))
 				return null;
 
-			var schema = Schema.FromFile(filename);
-			var parsed = schema.Parse(packet.Data);
+			ResultCollection r = null;
 
-			return parsed.Values;
+			try {
+				r = Schema.FromFile(filename).Parse(packet.Data);
+			} catch (Exception e) {
+#if DEBUG
+				Console.WriteLine(e.Message);
+#else
+				MessageBox.Show(e.Message);
+#endif
+			}
+
+			return r;
 		}
 
 		string GetSchemaFilename(PacketInfo packet) {
@@ -691,6 +712,15 @@ namespace Ostara {
 				flvPackets.AddObject(p);
 		}
 
+		void autoExpandCheckStateChanged(object sender, EventArgs e) {
+			if (noneToolStripMenuItem.CheckState == CheckState.Checked)
+				Settings.I.AutoExpand = Settings.AutoExpandType.None;
+			else if (bitfieldsOnlyToolStripMenuItem.CheckState == CheckState.Checked)
+				Settings.I.AutoExpand = Settings.AutoExpandType.Bitfields;
+			else if (allToolStripMenuItem.CheckState == CheckState.Checked)
+				Settings.I.AutoExpand = Settings.AutoExpandType.All;
+		}
+
 		delegate void AddPacketDel(PacketInfo p);
 
 		void ClearInspector() {
@@ -736,6 +766,14 @@ namespace Ostara {
 				file.WriteLine("include header.bee;");
 				file.WriteLine();
 				file.WriteLine("schema {");
+				file.Write("\theader:\t\t");
+
+				if (filename.Contains(".i."))
+					file.WriteLine("ServerHeader;");
+				else
+					file.WriteLine("ClientHeader;");
+
+				file.WriteLine("\t");
 				file.WriteLine("}");
 				file.Close();
 			}
@@ -745,7 +783,7 @@ namespace Ostara {
 			watcher.EnableRaisingEvents = true;
 			watcher.Changed += async (s, e) => {
 				await Task.Delay(500);
-				Action a = () => tlvStructure.SetObjects(ParsePacketData(packet));
+				Action a = () => SetStructureObjects(ParsePacketData(packet));
 				tlvStructure.Invoke(a);
 				a = () => tlvStructure.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
 				tlvStructure.Invoke(a);
@@ -759,6 +797,23 @@ namespace Ostara {
 			var pi = new ProcessStartInfo(path + filename);
 			p.StartInfo = pi;
 			p.Start();
+		}
+
+		void SetStructureObjects(ResultCollection collection) {
+			tlvStructure.SetObjects(collection);
+
+			switch (Settings.I.AutoExpand) {
+				case Settings.AutoExpandType.None:
+					break;
+				case Settings.AutoExpandType.Bitfields:
+					foreach (var v in collection)
+						if (v.Type == NodeType.Bitfield)
+							tlvStructure.Expand(v);
+					break;
+				case Settings.AutoExpandType.All:
+					tlvStructure.ExpandAll();
+					break;
+			}
 		}
 	}
 }

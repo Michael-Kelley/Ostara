@@ -65,6 +65,11 @@
 			this.olvEntryComment = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
 			this.cmsStructure = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.cmseStructureEdit = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.autoExpandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.noneToolStripMenuItem = new Ostara.Controls.ToolStripRadioButtonMenuItem();
+			this.bitfieldsOnlyToolStripMenuItem = new Ostara.Controls.ToolStripRadioButtonMenuItem();
+			this.allToolStripMenuItem = new Ostara.Controls.ToolStripRadioButtonMenuItem();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsbOpen = new System.Windows.Forms.ToolStripButton();
 			this.tsbSave = new System.Windows.Forms.ToolStripButton();
@@ -616,9 +621,11 @@
 			// 
 			this.cmsStructure.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.cmsStructure.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmseStructureEdit});
+            this.cmseStructureEdit,
+            this.toolStripSeparator5,
+            this.autoExpandToolStripMenuItem});
 			this.cmsStructure.Name = "cmsStructure";
-			this.cmsStructure.Size = new System.Drawing.Size(145, 26);
+			this.cmsStructure.Size = new System.Drawing.Size(145, 54);
 			// 
 			// cmseStructureEdit
 			// 
@@ -626,6 +633,45 @@
 			this.cmseStructureEdit.Size = new System.Drawing.Size(144, 22);
 			this.cmseStructureEdit.Text = "Edit Structure";
 			this.cmseStructureEdit.Click += new System.EventHandler(this.cmseStructureEdit_Click);
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(141, 6);
+			// 
+			// autoExpandToolStripMenuItem
+			// 
+			this.autoExpandToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noneToolStripMenuItem,
+            this.bitfieldsOnlyToolStripMenuItem,
+            this.allToolStripMenuItem});
+			this.autoExpandToolStripMenuItem.Name = "autoExpandToolStripMenuItem";
+			this.autoExpandToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.autoExpandToolStripMenuItem.Text = "Auto-Expand";
+			// 
+			// noneToolStripMenuItem
+			// 
+			this.noneToolStripMenuItem.CheckOnClick = true;
+			this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
+			this.noneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.noneToolStripMenuItem.Text = "None";
+			this.noneToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.autoExpandCheckStateChanged);
+			// 
+			// bitfieldsOnlyToolStripMenuItem
+			// 
+			this.bitfieldsOnlyToolStripMenuItem.CheckOnClick = true;
+			this.bitfieldsOnlyToolStripMenuItem.Name = "bitfieldsOnlyToolStripMenuItem";
+			this.bitfieldsOnlyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.bitfieldsOnlyToolStripMenuItem.Text = "Bitfields Only";
+			this.bitfieldsOnlyToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.autoExpandCheckStateChanged);
+			// 
+			// allToolStripMenuItem
+			// 
+			this.allToolStripMenuItem.CheckOnClick = true;
+			this.allToolStripMenuItem.Name = "allToolStripMenuItem";
+			this.allToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.allToolStripMenuItem.Text = "All";
+			this.allToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.autoExpandCheckStateChanged);
 			// 
 			// toolStrip1
 			// 
@@ -922,5 +968,10 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
 		private System.Windows.Forms.ComboBox cbBytesPerLine;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripMenuItem autoExpandToolStripMenuItem;
+		private Controls.ToolStripRadioButtonMenuItem noneToolStripMenuItem;
+		private Controls.ToolStripRadioButtonMenuItem bitfieldsOnlyToolStripMenuItem;
+		private Controls.ToolStripRadioButtonMenuItem allToolStripMenuItem;
 	}
 }

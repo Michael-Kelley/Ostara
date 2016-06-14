@@ -189,6 +189,12 @@
   <ItemGroup>
     <Content Include="Ostara.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Controls\Ostara.Controls.csproj">
+      <Project>{7362a2d1-4889-4ac0-9fc3-00c01db55e18}</Project>
+      <Name>Ostara.Controls</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
