@@ -17,7 +17,7 @@ namespace Ostara {
 		[DllImport("KERNEL32.DLL", EntryPoint = "WritePrivateProfileSectionA", CharSet = CharSet.Ansi)]
 		static extern int WritePrivateProfileSection(string lpAppName, string lpString, string lpFileName);
 
-		string filename;
+		readonly string filename;
 		string _section;
 		const int MAX_ENTRY = 32768;
 

@@ -88,9 +88,8 @@
 			this.tsbStop = new System.Windows.Forms.ToolStripButton();
 			this.tsbPause = new System.Windows.Forms.ToolStripButton();
 			this.tsbStart = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.tscbNet = new System.Windows.Forms.ToolStripComboBox();
-			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+			this.txtPort = new System.Windows.Forms.TextBox();
+			this.txtIp = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
@@ -653,7 +652,7 @@
 			// 
 			this.noneToolStripMenuItem.CheckOnClick = true;
 			this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
-			this.noneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.noneToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.noneToolStripMenuItem.Text = "None";
 			this.noneToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.autoExpandCheckStateChanged);
 			// 
@@ -661,7 +660,7 @@
 			// 
 			this.bitfieldsOnlyToolStripMenuItem.CheckOnClick = true;
 			this.bitfieldsOnlyToolStripMenuItem.Name = "bitfieldsOnlyToolStripMenuItem";
-			this.bitfieldsOnlyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.bitfieldsOnlyToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.bitfieldsOnlyToolStripMenuItem.Text = "Bitfields Only";
 			this.bitfieldsOnlyToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.autoExpandCheckStateChanged);
 			// 
@@ -669,7 +668,7 @@
 			// 
 			this.allToolStripMenuItem.CheckOnClick = true;
 			this.allToolStripMenuItem.Name = "allToolStripMenuItem";
-			this.allToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.allToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
 			this.allToolStripMenuItem.Text = "All";
 			this.allToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.autoExpandCheckStateChanged);
 			// 
@@ -689,10 +688,7 @@
             this.tsbAbout,
             this.tsbStop,
             this.tsbPause,
-            this.tsbStart,
-            this.toolStripSeparator2,
-            this.tscbNet,
-            this.toolStripLabel1});
+            this.tsbStart});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(1028, 27);
@@ -856,33 +852,29 @@
 			this.tsbStart.Text = "Start/Resume Logging";
 			this.tsbStart.Click += new System.EventHandler(this.tsbStart_Click);
 			// 
-			// toolStripSeparator2
+			// txtPort
 			// 
-			this.toolStripSeparator2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
+			this.txtPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtPort.Location = new System.Drawing.Point(906, 4);
+			this.txtPort.MaxLength = 5;
+			this.txtPort.Name = "txtPort";
+			this.txtPort.Size = new System.Drawing.Size(40, 20);
+			this.txtPort.TabIndex = 3;
 			// 
-			// tscbNet
+			// txtIp
 			// 
-			this.tscbNet.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.tscbNet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.tscbNet.Name = "tscbNet";
-			this.tscbNet.Size = new System.Drawing.Size(160, 27);
-			// 
-			// toolStripLabel1
-			// 
-			this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.toolStripLabel1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripLabel1.Image")));
-			this.toolStripLabel1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.toolStripLabel1.Name = "toolStripLabel1";
-			this.toolStripLabel1.Size = new System.Drawing.Size(115, 24);
-			this.toolStripLabel1.Text = "Network Interface";
+			this.txtIp.Location = new System.Drawing.Point(810, 4);
+			this.txtIp.Name = "txtIp";
+			this.txtIp.Size = new System.Drawing.Size(90, 20);
+			this.txtIp.TabIndex = 4;
 			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1028, 441);
+			this.Controls.Add(this.txtIp);
+			this.Controls.Add(this.txtPort);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.toolStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -918,9 +910,6 @@
 		System.Windows.Forms.ToolStripButton tsbStop;
 		System.Windows.Forms.ToolStripButton tsbPause;
 		System.Windows.Forms.ToolStripButton tsbStart;
-		System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		System.Windows.Forms.ToolStripComboBox tscbNet;
-		System.Windows.Forms.ToolStripLabel toolStripLabel1;
 		System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		System.Windows.Forms.Label inspDouble;
 		System.Windows.Forms.Label inspFloat;
@@ -973,5 +962,7 @@
 		private Controls.ToolStripRadioButtonMenuItem noneToolStripMenuItem;
 		private Controls.ToolStripRadioButtonMenuItem bitfieldsOnlyToolStripMenuItem;
 		private Controls.ToolStripRadioButtonMenuItem allToolStripMenuItem;
+		private System.Windows.Forms.TextBox txtPort;
+		private System.Windows.Forms.TextBox txtIp;
 	}
 }

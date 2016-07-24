@@ -15,12 +15,12 @@ namespace Ostara {
 			while (r.PeekChar() != -1) {
 				var length = r.ReadInt32();
 				var data = r.ReadBytes(length);
-				var p = new PacketInfo(data);
-				p.Opcode = r.ReadUInt16();
-				p.Time = DateTime.FromFileTimeUtc(r.ReadInt64());
-				p.Source = (PacketInfo.Daemon)r.ReadByte();
-				p.Destination = (PacketInfo.Daemon)r.ReadByte();
+				r.ReadUInt16();	// Opcode (no longer used)
+				var time = DateTime.FromFileTimeUtc(r.ReadInt64());
+				var source = (Daemon)r.ReadByte();
+				var destination = (Daemon)r.ReadByte();
 
+				var p = new PacketInfo(data, time, source, destination);
 				result.Add(p);
 			}
 
@@ -40,7 +40,8 @@ namespace Ostara {
 			foreach (PacketInfo p in packets) {
 				w.Write(p.Length);
 				w.Write(p.Data);
-				w.Write(p.Opcode);
+				//w.Write(p.Opcode);
+				w.Write((ushort)0);
 				w.Write(p.Time.ToFileTimeUtc());
 				w.Write((byte)p.Source);
 				w.Write((byte)p.Destination);
