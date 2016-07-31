@@ -87,7 +87,7 @@
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(378, 23);
 			this.label2.TabIndex = 2;
-			this.label2.Text = "v 3.0";
+			this.label2.Text = "v 2.6";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// label3

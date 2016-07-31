@@ -19,7 +19,7 @@ namespace Ostara {
 
 			if (!Exists(file)) {
 				NetworkInterface = 0;
-				ServerIP = "78.141.178.211";  // EU server address
+				ServerIP = "85.93.218.34";  // EU server address
 				ServerPort = 38101;
 				ClearOnStart = true;
 				BytesPerLine = 1;

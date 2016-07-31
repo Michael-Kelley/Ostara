@@ -3,7 +3,7 @@ using System.IO;
 
 using static System.IO.Directory;
 using static System.IO.Path;
-using static Ostara.Daemon;
+using static Ostara.PacketInfo.Daemon;
 
 namespace Ostara {
 	class Comments : Singleton<Comments> {

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-using static Ostara.Daemon;
+using static Ostara.PacketInfo;
+using static Ostara.PacketInfo.Daemon;
 
-using Key = System.Tuple<Ostara.Daemon, Ostara.Daemon>;
+using Key = System.Tuple<Ostara.PacketInfo.Daemon, Ostara.PacketInfo.Daemon>;
 using Val = System.Tuple<System.Drawing.Color, System.Drawing.Color>;
 
 namespace Ostara {
@@ -18,13 +19,12 @@ namespace Ostara {
 			var data = new PacketInfo[8];
 
 			for (int i = 0; i < 8; i++) {
-				data[i] = PacketInfo.Fake(
-					DateTime.Now,
-					1337,
-					42,
-					(i < 4) ? Client : (Daemon)(i - 3),
-					(i < 4) ? (Daemon)(i + 1) : Client
-				);
+				data[i] = new PacketInfo(new byte[] { });
+				data[i].Time = DateTime.Now;
+				data[i].Length = 42;
+				data[i].Source = (i < 4) ? Client : (Daemon)(i - 3);
+				data[i].Destination = (i < 4) ? (Daemon)(i + 1) : Client;
+				data[i].Opcode = 1337;
 			}
 
 			olvPreview.SetObjects(data);

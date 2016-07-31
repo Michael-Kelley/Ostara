@@ -5,7 +5,8 @@ using System.Windows.Forms.VisualStyles;
 
 namespace Ostara.Controls {
 	public class ToolStripRadioButtonMenuItem : ToolStripMenuItem {
-		public ToolStripRadioButtonMenuItem() {
+		public ToolStripRadioButtonMenuItem()
+			: base() {
 			Initialize();
 		}
 
@@ -63,8 +64,8 @@ namespace Ostara.Controls {
 
 			// Clear the checked state for all siblings. 
 			foreach (ToolStripItem item in Parent.Items) {
-				var radioItem = item as ToolStripRadioButtonMenuItem;
-
+				ToolStripRadioButtonMenuItem radioItem =
+					item as ToolStripRadioButtonMenuItem;
 				if (radioItem != null && radioItem != this && radioItem.Checked) {
 					radioItem.Checked = false;
 
@@ -124,10 +125,10 @@ namespace Ostara.Controls {
 			}
 
 			// Calculate the position at which to display the RadioButton.
-			int offset = (ContentRectangle.Height -
+			Int32 offset = (ContentRectangle.Height -
 				RadioButtonRenderer.GetGlyphSize(
 				e.Graphics, buttonState).Height) / 2;
-			var imageLocation = new Point(
+			Point imageLocation = new Point(
 				ContentRectangle.Location.X + 4,
 				ContentRectangle.Location.Y + offset);
 
@@ -136,7 +137,7 @@ namespace Ostara.Controls {
 				e.Graphics, imageLocation, buttonState);
 		}
 
-		bool mouseHoverState;
+		bool mouseHoverState = false;
 
 		protected override void OnMouseEnter(EventArgs e) {
 			mouseHoverState = true;
@@ -152,7 +153,7 @@ namespace Ostara.Controls {
 			base.OnMouseLeave(e);
 		}
 
-		bool mouseDownState;
+		bool mouseDownState = false;
 
 		protected override void OnMouseDown(MouseEventArgs e) {
 			mouseDownState = true;
@@ -172,7 +173,8 @@ namespace Ostara.Controls {
 		// and its Enabled property has not been explicitly set to false. 
 		public override bool Enabled {
 			get {
-				var ownerMenuItem = OwnerItem as ToolStripMenuItem;
+				ToolStripMenuItem ownerMenuItem =
+					OwnerItem as ToolStripMenuItem;
 
 				// Use the base value in design mode to prevent the designer
 				// from setting the base value to the calculated value.
@@ -191,11 +193,12 @@ namespace Ostara.Controls {
 		// with a CheckOnClick property value of true, subscribe to its 
 		// CheckedChanged event. 
 		protected override void OnOwnerChanged(EventArgs e) {
-			var ownerMenuItem = OwnerItem as ToolStripMenuItem;
-
-			if (ownerMenuItem != null && ownerMenuItem.CheckOnClick)
-				ownerMenuItem.CheckedChanged += OwnerMenuItem_CheckedChanged;
-
+			ToolStripMenuItem ownerMenuItem =
+				OwnerItem as ToolStripMenuItem;
+			if (ownerMenuItem != null && ownerMenuItem.CheckOnClick) {
+				ownerMenuItem.CheckedChanged +=
+					new EventHandler(OwnerMenuItem_CheckedChanged);
+			}
 			base.OnOwnerChanged(e);
 		}
 

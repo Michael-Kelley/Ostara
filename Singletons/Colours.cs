@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 using BrightIdeasSoftware;
@@ -6,9 +7,9 @@ using BrightIdeasSoftware;
 using static System.Drawing.Color;
 using static System.IO.File;
 using static System.Windows.Forms.Application;
-using static Ostara.Daemon;
+using static Ostara.PacketInfo.Daemon;
 
-using Key = System.Tuple<Ostara.Daemon, Ostara.Daemon>;
+using Key = System.Tuple<Ostara.PacketInfo.Daemon, Ostara.PacketInfo.Daemon>;
 using Val = System.Tuple<System.Drawing.Color, System.Drawing.Color>;
 
 namespace Ostara {
@@ -42,7 +43,7 @@ namespace Ostara {
 			f.Dispose();
 		}
 
-		public void FormatRow(OLVListItem r, Daemon src, Daemon dst) {
+		public void FormatRow(OLVListItem r, PacketInfo.Daemon src, PacketInfo.Daemon dst) {
 			var p = Pairs[new Key(src, dst)];
 			r.ForeColor = p.Item1;
 			r.BackColor = p.Item2;
