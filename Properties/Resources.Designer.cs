@@ -59,5 +59,15 @@ namespace Ostara.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MaterialIcons_Regular {
+            get {
+                object obj = ResourceManager.GetObject("MaterialIcons_Regular", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

@@ -13,6 +13,8 @@ using System.Windows.Forms;
 
 using BeeSchema;
 using Be.Windows.Forms;
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
 
 namespace Ostara {
 	partial class FormMain : Form {
@@ -21,6 +23,7 @@ namespace Ostara {
 
 		public FormMain() {
 			InitializeComponent();
+			InitialiseToolbar();
 
 			Settings.I.Load();
 			Colours.I.Load();
@@ -32,7 +35,7 @@ namespace Ostara {
 			txtIp.Text = Settings.I.ServerIP;
 			txtPort.Text = Settings.I.ServerPort.ToString();
 
-			tsbClearOnStart.Checked = Settings.I.ClearOnStart;
+			//tsbClearOnStart.Checked = Settings.I.ClearOnStart;
 			hexView.BytesPerLine = (Settings.I.BytesPerLine + 1) * 8;
 			tableLayoutPanel1.ColumnStyles[1].Width = hexView.RequiredWidth + 17;
 			cbBytesPerLine.SelectedIndex = Settings.I.BytesPerLine;
@@ -57,6 +60,51 @@ namespace Ostara {
 				else
 					return $"{x}";
 			};
+		}
+
+		void InitialiseToolbar() {
+			var pfc = new PrivateFontCollection();
+			var l = Properties.Resources.MaterialIcons_Regular.Length;
+			var fp = Marshal.AllocCoTaskMem(l);
+			Marshal.Copy(Properties.Resources.MaterialIcons_Regular, 0, fp, l);
+			pfc.AddMemoryFont(fp, l);
+			var font = new Font(pfc.Families[0], 12f);
+
+			tsbOpen.Font = font;
+			tsbOpen.Text = "\ue2c7";
+			tsbOpen.ToolTipText = "Open packet log";
+
+			tsbSave.Font = font;
+			tsbSave.Text = "\ue161";
+			tsbOpen.ToolTipText = "Save packet log";
+
+			tsbClear.Font = font;
+			tsbClear.Text = "\ue0b8";
+			tsbClear.ToolTipText = "Clear packet log";
+
+			tsbIgnore.Font = font;
+			tsbIgnore.Text = "\ue14b";
+			tsbIgnore.ToolTipText = "Manage ignored packets";
+
+			tsbOptions.Font = font;
+			tsbOptions.Text = "\ue8b8";
+			tsbOptions.ToolTipText = "Options";
+
+			tsbAbout.Font = font;
+			tsbAbout.Text = "\ue88e";
+			tsbAbout.ToolTipText = "About Ostara";
+
+			tsbStart.Font = font;
+			tsbStart.Text = "\ue037";
+			tsbStart.ToolTipText = "Start/Resume logging";
+
+			tsbPause.Font = font;
+			tsbPause.Text = "\ue034";
+			tsbPause.ToolTipText = "Pause logging";
+
+			tsbStop.Font = font;
+			tsbStop.Text = "\ue047";
+			tsbStop.ToolTipText = "Stop logging";
 		}
 
 		void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
@@ -84,10 +132,6 @@ namespace Ostara {
 
 			var file = PacketLog.Save(flvPackets.Objects);
 			MessageBox.Show($"Packet log saved as {file}");
-		}
-
-		void tsbClearOnStart_CheckedChanged(object sender, EventArgs e) {
-			Settings.I.ClearOnStart = tsbClearOnStart.Checked;
 		}
 
 		void tsbClear_Click(object sender, EventArgs e) {
@@ -172,7 +216,7 @@ namespace Ostara {
 		}
 
 		void StartLoginProxy() {
-			var proxy = new Proxy(Daemon.Login, IPAddress.Loopback, 65000, IPAddress.Parse(txtIp.Text), ushort.Parse(txtPort.Text));
+			var proxy = new Proxy(Daemon.Login, IPAddress.Loopback, 38101, IPAddress.Parse(txtIp.Text), ushort.Parse(txtPort.Text));
 			proxy.OnDisconnect += (s, e) => proxy.Start();
 			proxy.OnReceivePacket += (s, e) => {
 				if (e.Packet.IsIncoming) {
@@ -376,6 +420,9 @@ namespace Ostara {
 		}
 
 		void flvPackets_FormatRow(object sender, BrightIdeasSoftware.FormatRowEventArgs e) {
+			if (e.Model == null)
+				return;
+
 			var p = (PacketInfo)e.Model;
 			Colours.I.FormatRow(e.Item, p.Source, p.Destination);
 
